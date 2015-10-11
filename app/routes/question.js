@@ -48,7 +48,7 @@ export default Ember.Route.extend({
         }
       });
       question.save();
-      this.transitionTo('index');
+      this.transitionTo('question');
     },
   }
 });
