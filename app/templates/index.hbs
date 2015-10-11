@@ -1,0 +1,12 @@
+<h4 class="welcome">Welcome to our Question and Answer Board!</h4>
+<h4> Today is {{current-date}}</h4>
+
+<h3 class="list">List of available questions</h3>
+
+<ul>
+  {{#each model as |question|}}
+    {{question-tile question=question deleteQuestion="deleteQuestion"}}
+  {{/each}}
+</ul>
+
+{{new-question saveQuestion="saveQuestion"}}

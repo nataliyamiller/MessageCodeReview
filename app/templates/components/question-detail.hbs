@@ -1,0 +1,31 @@
+<div class="col-md-5 well">
+<h3>Question: <span class="one">{{question.content}}</span></h3>
+<h4>Author: {{question.questionAuthor}}</h4>
+<h4>Description: {{question.description}}</h4>
+<br>
+<button class="btn-danger" {{action 'deleteQuestion' question}}>Delete question</button>
+</div>
+
+<div class="col-md-1">
+</div>
+
+<div class="col-md-6">
+  <br>
+<h4 class="add">Add new answer to this question!</h4>
+{{new-answer saveAnswer="saveAnswer" question=question}}
+<br>
+<br>
+<h4>Answers by other users:</h4>
+{{#each question.answers as |answer|}}
+  <div class="answerBox">
+    <ul>
+    <li class="answer"><span id="two"> Answer: </span><strong>{{answer.answerContent}}</strong>, <span id="three">Submitted by:</span><strong> {{answer.answerAuthor}}</strong><span id="three"> On </span><strong>{{format-date answer.date_added}}</strong>
+    <h5><strong>Vote results: {{answer.votes}}</strong></h5>
+    <button class="glyphicon glyphicon-thumbs-up" {{action 'voteUpAnswer' answer}}></button>
+    <button class="glyphicon glyphicon-thumbs-down" {{action 'voteDownAnswer' answer}}></button>
+    <button {{action 'deleteAnswer' answer}}>Delete asnwer</button>
+    </li>
+  </ul>
+  </div>
+  {{/each}}
+</div>

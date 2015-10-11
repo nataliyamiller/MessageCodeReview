@@ -1,0 +1,50 @@
+/*.jumbotron {
+  margin: 10px;
+  text-align: center;
+  font-style: italic;
+  height: 200px;
+  font-size: 40px;
+  background-color: yellow;
+}*/
+* {
+	background-color: #F5F5DC;
+}
+
+.one {
+  font-size: 25px;
+  font-style: italic;
+  font-weight: bold;
+
+}
+
+#two {
+  color: red;
+  font-size: 15px;
+}
+
+#three {
+  color: red;
+  font-size: 15px;
+}
+
+h1 {
+	color: blue;
+	font-family: Verdana;
+	font-style: italic;
+	font-size: 45px;
+	text-align: center;
+	background-color: Azure;
+	/*border-radius: 45%;*/
+}
+
+.welcome {
+  text-align: center;
+}
+
+.well {
+  background-color: green;
+}
+
+.add {
+  color: blue;
+}
