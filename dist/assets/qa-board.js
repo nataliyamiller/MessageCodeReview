@@ -443,6 +443,8 @@ define('qa-board/models/question', ['exports', 'ember-data'], function (exports,
     content: DS['default'].attr(),
     questionAuthor: DS['default'].attr(),
     description: DS['default'].attr(),
+    answerSorting: ['votes:desc'],
+    sortedAnswers: Ember.computed.sort('answers', 'answerSorting'),
     answers: DS['default'].hasMany('answer', { async: true })
   });
 
@@ -521,12 +523,17 @@ define('qa-board/routes/question', ['exports', 'ember'], function (exports, Embe
       },
 
       voteUpAnswer: function voteUpAnswer(answer) {
-        answer.set('votes', answer.get('votes') + 1);
-        answer.save();
+        answer.set('votes', answer.get('votes') + 1).then(function () {
+          question.save();
+        });
+        this.transitionTo('question');
       },
+
       voteDownAnswer: function voteDownAnswer(answer) {
-        answer.set('votes', answer.get('votes') - 1);
-        answer.save();
+        answer.set('votes', answer.get('votes') - 1).then(function () {
+          question.save();
+        });
+        this.transitionTo('question');
       },
 
       deleteQuestion: function deleteQuestion(question) {
@@ -3869,7 +3876,7 @@ define('qa-board/templates/components/question-detail', ['exports'], function (e
         ["content","question.description",["loc",[null,[4,17],[4,41]]]],
         ["element","action",["deleteQuestion",["get","question",["loc",[null,[6,53],[6,61]]]]],[],["loc",[null,[6,27],[6,63]]]],
         ["inline","new-answer",[],["saveAnswer","saveAnswer","question",["subexpr","@mut",[["get","question",["loc",[null,[15,46],[15,54]]]]],[],[]]],["loc",[null,[15,0],[15,56]]]],
-        ["block","each",[["get","question.answers",["loc",[null,[19,8],[19,24]]]]],[],0,null,["loc",[null,[19,0],[30,11]]]]
+        ["block","each",[["get","question.sortedAnswers",["loc",[null,[19,8],[19,30]]]]],[],0,null,["loc",[null,[19,0],[30,11]]]]
       ],
       locals: [],
       templates: [child0]
@@ -4383,7 +4390,7 @@ define('qa-board/tests/adapters/application.jshint', function () {
 
   QUnit.module('JSHint - adapters');
   QUnit.test('adapters/application.js should pass jshint', function(assert) { 
-    assert.ok(true, 'adapters/application.js should pass jshint.'); 
+    assert.ok(false, 'adapters/application.js should pass jshint.\nadapters/application.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nadapters/application.js: line 2, col 1, \'import\' is only available in ES6 (use esnext option).\nadapters/application.js: line 4, col 1, \'const\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nadapters/application.js: line 4, col 1, \'destructuring expression\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nadapters/application.js: line 6, col 1, \'export\' is only available in ES6 (use esnext option).\n\n5 errors'); 
   });
 
 });
@@ -4393,7 +4400,7 @@ define('qa-board/tests/app.jshint', function () {
 
   QUnit.module('JSHint - .');
   QUnit.test('app.js should pass jshint', function(assert) { 
-    assert.ok(true, 'app.js should pass jshint.'); 
+    assert.ok(false, 'app.js should pass jshint.\napp.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\napp.js: line 2, col 1, \'import\' is only available in ES6 (use esnext option).\napp.js: line 3, col 1, \'import\' is only available in ES6 (use esnext option).\napp.js: line 4, col 1, \'import\' is only available in ES6 (use esnext option).\napp.js: line 18, col 1, \'export\' is only available in ES6 (use esnext option).\n\n5 errors'); 
   });
 
 });
@@ -4403,7 +4410,7 @@ define('qa-board/tests/components/new-answer.jshint', function () {
 
   QUnit.module('JSHint - components');
   QUnit.test('components/new-answer.js should pass jshint', function(assert) { 
-    assert.ok(false, 'components/new-answer.js should pass jshint.\ncomponents/new-answer.js: line 21, col 43, Expected an assignment or function call and instead saw an expression.\n\n1 error'); 
+    assert.ok(false, 'components/new-answer.js should pass jshint.\ncomponents/new-answer.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\ncomponents/new-answer.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\ncomponents/new-answer.js: line 6, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/new-answer.js: line 10, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/new-answer.js: line 21, col 43, Expected an assignment or function call and instead saw an expression.\n\n5 errors'); 
   });
 
 });
@@ -4413,7 +4420,7 @@ define('qa-board/tests/components/new-question.jshint', function () {
 
   QUnit.module('JSHint - components');
   QUnit.test('components/new-question.js should pass jshint', function(assert) { 
-    assert.ok(false, 'components/new-question.js should pass jshint.\ncomponents/new-question.js: line 20, col 45, Expected an assignment or function call and instead saw an expression.\n\n1 error'); 
+    assert.ok(false, 'components/new-question.js should pass jshint.\ncomponents/new-question.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\ncomponents/new-question.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\ncomponents/new-question.js: line 6, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/new-question.js: line 10, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/new-question.js: line 20, col 45, Expected an assignment or function call and instead saw an expression.\n\n5 errors'); 
   });
 
 });
@@ -4423,7 +4430,7 @@ define('qa-board/tests/components/question-detail.jshint', function () {
 
   QUnit.module('JSHint - components');
   QUnit.test('components/question-detail.js should pass jshint', function(assert) { 
-    assert.ok(true, 'components/question-detail.js should pass jshint.'); 
+    assert.ok(false, 'components/question-detail.js should pass jshint.\ncomponents/question-detail.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\ncomponents/question-detail.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\ncomponents/question-detail.js: line 5, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/question-detail.js: line 9, col 4, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/question-detail.js: line 12, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/question-detail.js: line 16, col 4, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/question-detail.js: line 20, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\n\n7 errors'); 
   });
 
 });
@@ -4433,7 +4440,7 @@ define('qa-board/tests/components/question-tile.jshint', function () {
 
   QUnit.module('JSHint - components');
   QUnit.test('components/question-tile.js should pass jshint', function(assert) { 
-    assert.ok(true, 'components/question-tile.js should pass jshint.'); 
+    assert.ok(false, 'components/question-tile.js should pass jshint.\ncomponents/question-tile.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\ncomponents/question-tile.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\ncomponents/question-tile.js: line 5, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\n\n3 errors'); 
   });
 
 });
@@ -4443,7 +4450,7 @@ define('qa-board/tests/components/update-question.jshint', function () {
 
   QUnit.module('JSHint - components');
   QUnit.test('components/update-question.js should pass jshint', function(assert) { 
-    assert.ok(false, 'components/update-question.js should pass jshint.\ncomponents/update-question.js: line 18, col 43, Expected an assignment or function call and instead saw an expression.\n\n1 error'); 
+    assert.ok(false, 'components/update-question.js should pass jshint.\ncomponents/update-question.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\ncomponents/update-question.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\ncomponents/update-question.js: line 6, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/update-question.js: line 9, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\ncomponents/update-question.js: line 18, col 43, Expected an assignment or function call and instead saw an expression.\n\n5 errors'); 
   });
 
 });
@@ -4453,7 +4460,7 @@ define('qa-board/tests/helpers/current-date.jshint', function () {
 
   QUnit.module('JSHint - helpers');
   QUnit.test('helpers/current-date.js should pass jshint', function(assert) { 
-    assert.ok(false, 'helpers/current-date.js should pass jshint.\nhelpers/current-date.js: line 4, col 10, \'moment\' is not defined.\n\n1 error'); 
+    assert.ok(false, 'helpers/current-date.js should pass jshint.\nhelpers/current-date.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nhelpers/current-date.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\nhelpers/current-date.js: line 7, col 1, \'export\' is only available in ES6 (use esnext option).\n\n3 errors'); 
   });
 
 });
@@ -4463,7 +4470,7 @@ define('qa-board/tests/helpers/format-date.jshint', function () {
 
   QUnit.module('JSHint - helpers');
   QUnit.test('helpers/format-date.js should pass jshint', function(assert) { 
-    assert.ok(false, 'helpers/format-date.js should pass jshint.\nhelpers/format-date.js: line 5, col 10, \'moment\' is not defined.\n\n1 error'); 
+    assert.ok(false, 'helpers/format-date.js should pass jshint.\nhelpers/format-date.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nhelpers/format-date.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\nhelpers/format-date.js: line 8, col 1, \'export\' is only available in ES6 (use esnext option).\n\n3 errors'); 
   });
 
 });
@@ -5388,7 +5395,7 @@ define('qa-board/tests/models/answer.jshint', function () {
 
   QUnit.module('JSHint - models');
   QUnit.test('models/answer.js should pass jshint', function(assert) { 
-    assert.ok(true, 'models/answer.js should pass jshint.'); 
+    assert.ok(false, 'models/answer.js should pass jshint.\nmodels/answer.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nmodels/answer.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\n\n2 errors'); 
   });
 
 });
@@ -5398,7 +5405,7 @@ define('qa-board/tests/models/question.jshint', function () {
 
   QUnit.module('JSHint - models');
   QUnit.test('models/question.js should pass jshint', function(assert) { 
-    assert.ok(true, 'models/question.js should pass jshint.'); 
+    assert.ok(false, 'models/question.js should pass jshint.\nmodels/question.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nmodels/question.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\n\n2 errors'); 
   });
 
 });
@@ -5408,7 +5415,7 @@ define('qa-board/tests/router.jshint', function () {
 
   QUnit.module('JSHint - .');
   QUnit.test('router.js should pass jshint', function(assert) { 
-    assert.ok(true, 'router.js should pass jshint.'); 
+    assert.ok(false, 'router.js should pass jshint.\nrouter.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nrouter.js: line 2, col 1, \'import\' is only available in ES6 (use esnext option).\nrouter.js: line 13, col 1, \'export\' is only available in ES6 (use esnext option).\n\n3 errors'); 
   });
 
 });
@@ -5418,7 +5425,7 @@ define('qa-board/tests/routes/about.jshint', function () {
 
   QUnit.module('JSHint - routes');
   QUnit.test('routes/about.js should pass jshint', function(assert) { 
-    assert.ok(true, 'routes/about.js should pass jshint.'); 
+    assert.ok(false, 'routes/about.js should pass jshint.\nroutes/about.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nroutes/about.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\n\n2 errors'); 
   });
 
 });
@@ -5428,7 +5435,7 @@ define('qa-board/tests/routes/index.jshint', function () {
 
   QUnit.module('JSHint - routes');
   QUnit.test('routes/index.js should pass jshint', function(assert) { 
-    assert.ok(true, 'routes/index.js should pass jshint.'); 
+    assert.ok(false, 'routes/index.js should pass jshint.\nroutes/index.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nroutes/index.js: line 4, col 1, \'export\' is only available in ES6 (use esnext option).\nroutes/index.js: line 5, col 3, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/index.js: line 10, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/index.js: line 16, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\n\n5 errors'); 
   });
 
 });
@@ -5438,7 +5445,7 @@ define('qa-board/tests/routes/question.jshint', function () {
 
   QUnit.module('JSHint - routes');
   QUnit.test('routes/question.js should pass jshint', function(assert) { 
-    assert.ok(false, 'routes/question.js should pass jshint.\nroutes/question.js: line 20, col 11, \'question\' is not defined.\n\n1 error'); 
+    assert.ok(false, 'routes/question.js should pass jshint.\nroutes/question.js: line 1, col 1, \'import\' is only available in ES6 (use esnext option).\nroutes/question.js: line 3, col 1, \'export\' is only available in ES6 (use esnext option).\nroutes/question.js: line 4, col 3, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 8, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 18, col 3, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 25, col 7, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 32, col 8, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 40, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\nroutes/question.js: line 45, col 5, \'concise methods\' is available in ES6 (use esnext option) or Mozilla JS extensions (use moz).\n\n9 errors'); 
   });
 
 });
@@ -5692,7 +5699,7 @@ catch(err) {
 if (runningTests) {
   require("qa-board/tests/test-helper");
 } else {
-  require("qa-board/app")["default"].create({"name":"qa-board","version":"0.0.0+d68a53cd"});
+  require("qa-board/app")["default"].create({"name":"qa-board","version":"0.0.0+7e5a2dd0"});
 }
 
 /* jshint ignore:end */

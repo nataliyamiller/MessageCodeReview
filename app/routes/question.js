@@ -23,12 +23,17 @@ export default Ember.Route.extend({
       },
 
       voteUpAnswer(answer) {
-               answer.set('votes', answer.get('votes') + 1);
-               answer.save();
-           },
+               answer.set('votes', answer.get('votes') + 1).then(function() {
+               question.save();
+           });
+           this.transitionTo('question');
+         },
+
        voteDownAnswer(answer) {
-               answer.set('votes', answer.get('votes') - 1);
-               answer.save();
+               answer.set('votes', answer.get('votes') - 1).then(function() {
+                  question.save();
+               });
+              this.transitionTo('question');
            },
 
 

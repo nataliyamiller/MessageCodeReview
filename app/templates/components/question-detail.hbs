@@ -16,7 +16,7 @@
 <br>
 <br>
 <h4>Answers by other users:</h4>
-{{#each question.answers as |answer|}}
+{{#each question.sortedAnswers as |answer|}}
   <div class="answerBox">
     <ul>
     <li class="answer"><span id="two"> Answer: </span><strong>{{answer.answerContent}}</strong>, <span id="three">Submitted by:</span><strong> {{answer.answerAuthor}}</strong><span id="three"> On </span><strong>{{format-date answer.date_added}}</strong>
