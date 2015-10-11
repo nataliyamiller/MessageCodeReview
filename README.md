@@ -4,7 +4,9 @@
 
 ##### October 3rd, 2015.
 
-On this website you can add questions and receive answers. It's finally here!
+On this website you can add questions and receive answers.
+Application has CRUD functionality for questions, you can also vote on answers.
+What else could you ask for? :-)
 
 ## Prerequisites
 

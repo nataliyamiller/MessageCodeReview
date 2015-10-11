@@ -13,29 +13,28 @@ export default Ember.Route.extend({
         return question.save();
       });
       this.transitionTo('question', params.question);
-  },
+    },
 
-  deleteAnswer(answer) {
-        answer.destroyRecord().then(function() {
-          question.save();
-        });
-        this.transitionTo('question');
-      },
+    deleteAnswer(answer) {
+      answer.destroyRecord().then(function() {
+        question.save();
+      });
+      this.transitionTo('question');
+    },
 
-      voteUpAnswer(answer) {
-               answer.set('votes', answer.get('votes') + 1).then(function() {
-               question.save();
-           });
-           this.transitionTo('question');
-         },
+    voteUpAnswer(answer) {
+      answer.set('votes', answer.get('votes') + 1).then(function() {
+        question.save();
+      });
+      this.transitionTo('question');
+    },
 
-       voteDownAnswer(answer) {
-               answer.set('votes', answer.get('votes') - 1).then(function() {
-                  question.save();
-               });
-              this.transitionTo('question');
-           },
-
+    voteDownAnswer(answer) {
+      answer.set('votes', answer.get('votes') - 1).then(function() {
+        question.save();
+      });
+      this.transitionTo('question');
+    },
 
     deleteQuestion(question) {
       question.destroyRecord();
